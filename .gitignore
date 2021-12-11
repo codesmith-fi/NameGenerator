@@ -1,3 +1,7 @@
 .vscode
+.vs
+Debug
+*.filters
+*.vcxproj.user
 *.o
 namegen
