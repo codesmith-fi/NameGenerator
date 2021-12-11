@@ -1,3 +1,35 @@
+/**
+ * NameGenerator
+ * Author: Erno Pakarinen 
+ * mailto: codesmith.fi@gmail.com
+ * 
+ * A simple name generator that can be used in games to generate character 
+ * and/or player names.
+ * 
+ * Create an instance passing a desired random seed. If seed is not given 
+ * it uses time based random seed.
+ * 
+ * Generate first and last name using the following methods, note: These 
+ * methods always generate new names!
+ * 
+ *  firstName(maxparts)
+ *  lastName(maxparts)
+ *  fullName(maxfirst, maxlast)             last name follows the first name
+ *  fullNameReversed(maxfirst, maxlast)     first name follows the last name 
+ * 
+ * Parameter maxparts tells how many different syllables (or name parts) can 
+ * be used. Remember however that it's only a max amount, random amount will
+ * be used up to the given max. First name always contains one name part,
+ * and the last name can be left completely empty.
+ * 
+ * Methods:
+ *  getPreviousFirstName()
+ *  getPreviousLastName()
+ * 
+ * Can be used to get the most recent name generated.
+ * 
+ */
+
 #include <iostream>
 #include <vector>
 #include <time.h>
@@ -61,6 +93,41 @@ namespace codesmith
             m_prevLastName = makeNameString(c);
             return m_prevLastName;
         } 
+
+        const std::string fullName(int aMaxFirst=4, int aMaxLast=4) {
+            auto first = firstName(aMaxFirst);
+            auto last = lastName(aMaxLast);
+            std::string fullName = "";
+            if (last.size() != 0) {
+                fullName = first + " " + last;
+            }
+            else {
+                fullName = first;
+            }
+            return fullName;
+        }
+
+        const std::string fullNameReversed(int aMaxFirst = 4, int aMaxLast = 4) {
+            auto first = firstName(aMaxFirst);
+            auto last = lastName(aMaxLast);
+            std::string fullName = "";
+            if (last.size() != 0) {
+                fullName = last + " " + first;
+            }
+            else {
+                fullName = first;
+            }
+
+            return fullName;
+        }
+
+        const std::string& getPreviousFirstName() const {
+            return m_prevFirstName;
+        }
+
+        const std::string& getPreviousLastName() const {
+            return m_prevLastName;
+        }
 
         void setSyllables(std::vector<std::string>& aSyllables) {
             m_syllables = aSyllables;
